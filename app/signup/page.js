@@ -9,10 +9,32 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ name, email, password, confirmPassword });
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Signup successful");
+      console.log(data);
+    } else {
+      alert(data.message || "Signup failed");
+    }
   };
+
 
   return (
     <div className={styles.container}>
@@ -46,8 +68,8 @@ export default function Signup() {
         <input
           type="password"
           placeholder="Confirm Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
 

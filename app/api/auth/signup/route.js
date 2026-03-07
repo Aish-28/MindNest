@@ -7,7 +7,7 @@ export async function POST(request) {
   const { name, email, password,  } = await request.json();
 
   if (!name || !email || !password) {
-    return new Response("Missing fields", { status: 400 });
+    return new Response.json({message:"Missing fields"}, { status: 400 });
   }
 
   const exists = await prisma.user.findUnique({
@@ -15,7 +15,7 @@ export async function POST(request) {
   });
 
   if (exists) {
-    return new Response("User already exists", { status: 409 });
+    return new Response.json({message:"User already exists"}, { status: 409 });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -30,6 +30,7 @@ export async function POST(request) {
   });
 
   return Response.json({
+    message:"User created",
     id: user.id,
     email: user.email,
    
