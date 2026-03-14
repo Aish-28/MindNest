@@ -29,7 +29,7 @@ export default function Signup() {
 
     if (res.ok) {
       alert("Signup successful");
-      console.log(data);
+      router.push("/login");
     } else {
       alert(data.message || "Signup failed");
     }

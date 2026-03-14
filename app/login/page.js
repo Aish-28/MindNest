@@ -2,10 +2,15 @@
 import { useState } from "react";
 import styles from "./login.module.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,8 +41,8 @@ export default function Login() {
       // optionally store user
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      console.log("Login success", data);
       alert("Login successful!");
+      router.push("/dashboard");
 
     } catch (error) {
       console.error("Login error:", error);
