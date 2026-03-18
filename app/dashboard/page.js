@@ -1,8 +1,48 @@
+"use client";
+
 import styles from "./dashboard.module.css";
 import Sidebar from "../../components/sidebar";
 import Navbar from "../../components/navbar";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch("http://localhost:5000/api/user", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await res.json();
+        setUser(data);
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  // Loading state
+  if (!user) {
+    return (
+      <div className={styles.container}>
+        <Sidebar />
+        <div className={styles.main}>
+          <Navbar />
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
 
@@ -17,7 +57,7 @@ export default function Dashboard() {
         </h2>
 
         <h2 className={styles.welcome}>
-          Welcome back, Aishwarya 
+          Welcome back, {user?.name}
         </h2>
 
         {/* Stats Cards */}
