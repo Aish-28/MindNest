@@ -12,7 +12,7 @@ export default function Sidebar() {
         <li><Link href="">Generate Q&A</Link></li>
         <li><Link href="">Topic Analysis</Link></li>
         <li><Link href="">History</Link></li>
-        <li><Link href="">Profile</Link></li>
+        <li><Link href="/profile">Profile</Link></li>
       </ul>
     </div>
   );

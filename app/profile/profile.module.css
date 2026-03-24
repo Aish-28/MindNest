@@ -1,0 +1,134 @@
+.container {
+  display: flex;
+  height: 100vh;
+  background: #f4f6f8;
+}
+
+.main {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  margin-left: 50px;
+}
+
+.avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #0d213c;
+}
+
+.name{
+    color: #0d213c;
+}
+
+.email {
+  color: #0d213c;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 70px;
+  margin-top: -130px;
+  margin-left: 700px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 130px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.card h3 {
+  color: #4a6cf7;
+}
+
+.card p{
+    color: black;
+}
+
+/* Form */
+.formCard {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  width: 82%;
+  margin-left: 100px;
+  height: 350px;
+}
+
+.heading{
+    color: #0d213c;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.grid label{
+    color: black;
+}
+
+.grid input{
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  color: black;
+  background-color: #f3f4f6;
+  margin-top: 5px;
+}
+
+.grid textarea {
+  grid-column: span 2;
+  height: 80px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #f3f4f6;
+  margin-top: 5px;
+  color: black;
+}
+
+/* Buttons */
+.actions {
+  margin-top: 20px;
+}
+
+.editBtn {
+  background: #4a6cf7;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.saveBtn {
+  background: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

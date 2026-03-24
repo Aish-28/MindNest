@@ -1,8 +1,35 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./dashboard.module.css";
 import Sidebar from "../../components/sidebar";
 import Navbar from "../../components/navbar";
+import { getUserFromToken } from "../lib/getUserFromToken";
 
 export default function Dashboard() {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.replace("/login"); // 🔥 block access
+    } else {
+      const decodedUser = getUserFromToken();
+      if (!decodedUser) {
+        router.replace("/login");
+      } else {
+        setUser(decodedUser);
+        setLoading(false);
+      }
+    }
+  }, []);
+
+  if (loading) return null;
+
   return (
     <div className={styles.container}>
 
@@ -17,7 +44,7 @@ export default function Dashboard() {
         </h2>
 
         <h2 className={styles.welcome}>
-          Welcome back, Aishwarya 
+          Welcome back, {user?.name}
         </h2>
 
         {/* Stats Cards */}
