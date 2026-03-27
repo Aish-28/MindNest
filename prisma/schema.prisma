@@ -48,6 +48,7 @@ model Project {
   questionBanks  QuestionBank[]
   notes          Note[]
   topicAnalysis  TopicAnalysis?
+   projectContents ProjectContent[]
 }
 
 model Content {
@@ -62,6 +63,7 @@ model Content {
   fileUrl     String?   // for PDFs
   youtubeUrl  String?   // for youtube links
   transcript  String?   // extracted transcript/text
+  projects ProjectContent[]
 }
 
 model QuestionBank {
@@ -106,4 +108,14 @@ model TopicAnalysis {
 
   projectId String  @unique
   project   Project @relation(fields: [projectId], references: [id])
+}
+
+model ProjectContent {
+  projectId String
+  contentId String
+
+  project Project @relation(fields: [projectId], references: [id])
+  content Content @relation(fields: [contentId], references: [id])
+
+  @@id([projectId, contentId])
 }

@@ -40,6 +40,7 @@ export default function Profile() {
 
     // 👉 Load saved profile from localStorage
     const savedProfile = localStorage.getItem("profile");
+    console.log("Saved profile:", savedProfile);
 
     if (savedProfile) {
       const parsed = JSON.parse(savedProfile);
