@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import { processContent } from "@/lib/processContent";
+import { processContent } from "../../../lib/processContent"
 
 
 
@@ -26,7 +26,7 @@ export async function POST(request) {
             const bytes = await file.arrayBuffer();
             const buffer = Buffer.from(bytes);
 
-            fileUrl = "temp";
+            fileUrl = "C:/Users/User/Downloads/4.pdf";
             const content = await prisma.content.create({
                 data: {
                     title,
