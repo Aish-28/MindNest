@@ -29,6 +29,39 @@
   font-size: 14px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
+/* dropdown */
+
+.projectSelector {
+  margin-bottom: 20px;
+}
+
+.projectSelector label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: black;
+}
+
+.dropdown {
+  width: 250px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: 0.2s;
+  color: black;
+}
+
+.dropdown:hover {
+  border-color: #4a6cf7;
+}
+
+.dropdown:focus {
+  outline: none;
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 2px rgba(74,108,247,0.2);
+}
 
 /* Tabs */
 .tabs {

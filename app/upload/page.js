@@ -2,7 +2,7 @@
 import styles from "./upload.module.css";
 import Sidebar from "../../components/sidebar";
 import Navbar from "../../components/navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Upload() {
 
@@ -10,10 +10,29 @@ export default function Upload() {
     const [file, setFile] = useState(null);
     const [youtubeLink, setYoutubeLink] = useState("");
     const [status, setStatus] = useState([]);
+    const [projects, setProjects] = useState([]);
+    const [selectedProject, setSelectedProject] = useState("");
+
+    useEffect(() => {
+  const savedProjects = localStorage.getItem("projects");
+  if (savedProjects) {
+    const parsed = JSON.parse(savedProjects);
+    setProjects(parsed);
+
+    // Auto select first project
+    if (parsed.length > 0) {
+      setSelectedProject(parsed[0].name);
+    }
+  }
+}, []);
 
     // Handle PDF Upload
     const handleFileChange = async (e) => {
         const selectedFile = e.target.files[0];
+        if (!selectedProject) {
+            alert("Please select a project first!");
+            return;
+        }
         if (!selectedFile) return;
 
         setFile(selectedFile);
@@ -33,6 +52,10 @@ export default function Upload() {
 
     // Handle YouTube Submit
     const handleYoutubeSubmit = async () => {
+        if (!selectedProject) {
+            alert("Please select a project first!");
+            return;
+        }
         if (!youtubeLink) return;
 
         setStatus([]);
@@ -57,6 +80,28 @@ export default function Upload() {
 
                 <div className={styles.header}>
                     <h2>Upload Content</h2>
+                </div>
+
+                {/* Dropdown */}
+
+                <div className={styles.projectSelector}>
+                <label>Select Project</label>
+
+                <select
+                    value={selectedProject}
+                    onChange={(e) => setSelectedProject(e.target.value)}
+                    className={styles.dropdown}
+                >
+                    {projects.length === 0 ? (
+                    <option>No projects found</option>
+                    ) : (
+                    projects.map((proj, index) => (
+                        <option key={index} value={proj.name}>
+                        {proj.name}
+                        </option>
+                    ))
+                    )}
+                </select>
                 </div>
 
                 {/* Tabs */}
