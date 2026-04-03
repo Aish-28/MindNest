@@ -107,7 +107,9 @@ export default function Profile() {
         {/* Header */}
         <div className={styles.header}>
           <div>
-            <img src={preview} className={styles.avatar} />
+            <div className={styles.avatar}>
+              {formData.name ? formData.name.charAt(0).toUpperCase() : "U"}
+            </div>
             {isEditing && (
               <input type="file" onChange={handleImageChange} />
             )}
