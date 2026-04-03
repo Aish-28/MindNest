@@ -60,11 +60,9 @@ export default function Navbar() {
         <div className={styles.profile}>
           <span className={styles.name}>{displayName}</span>
 
-          <img
-            src={displayImage}
-            alt="profile"
-            className={styles.avatar}
-          />
+          <div className={styles.avatar}>
+            {displayName ? displayName.charAt(0).toUpperCase() : "G"}
+          </div>
         </div>
 
         <FiLogOut
