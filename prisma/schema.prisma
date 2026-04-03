@@ -57,6 +57,8 @@ model Content {
   type      ContentType
   createdAt DateTime    @default(now())
 
+  status    String      @default("processing")
+
   projectId String
   project   Project     @relation(fields: [projectId], references: [id])
 
