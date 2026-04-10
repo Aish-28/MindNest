@@ -9,101 +9,192 @@
   padding: 30px;
 }
 
-/* Create Box */
-.title{
-    color: black;
-    font-size: 30px;
-    margin-top: 40px;
-    margin-bottom: 30px;
+/* Title */
+.title {
+  color: black;
+  font-size: 30px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
-.createBox {
+/* Form Box */
+.formBox {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
   display: flex;
-  gap: 10px;
-  margin: 20px 0;
-  margin-bottom: 30px;
+  flex-direction: column;
+  gap: 12px;
+  width: 500px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.createBox input {
+.formBox input,
+.formBox textarea {
   padding: 12px;
-  width: 450px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 8px;
   outline: none;
-  background-color: white;
+  font-size: 14px;
   color: black;
-  font-size: 15px;
+  background: white;
+  font-family: 'Times New Roman', Times, serif;
 }
 
-.createBox button {
+.formBox textarea {
+  resize: none;
+  height: 80px;
+}
+
+.formBox button {
   background: #4a6cf7;
   color: white;
   border: none;
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
-  width: 100px;
-  font-size: 17px;
+  font-size: 16px;
 }
 
-.createBox button:hover {
+.formBox button:hover {
   background: #3b55d1;
 }
 
 /* Grid */
 .projectGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 60px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
 }
 
-.para{
-    color: black;
+.para {
+  color: black;
 }
 
-/* Card */
-.card {
+/* Empty State */
+.emptyState {
+  width: 100%;
+  text-align: center;
+  padding: 60px 20px;
   background: white;
-  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  transition: 0.3s;
-  width: 300px;
-  height: 130px;
 }
 
-.projName{
-    color: black;
-    font-size: 20px;
+.emptyIcon {
+  font-size: 50px;
+  margin-bottom: 10px;
 }
 
+.emptyState h3 {
+  color: black;
+  margin-bottom: 5px;
+}
+
+.emptyState p {
+  color: gray;
+  font-size: 14px;
+}
+
+
+/* Modern Glassmorphism Card */
+.card {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff, #f1f5ff);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Top Accent Line */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(90deg, #4a6cf7, #7c3aed);
+}
+
+/* Hover Effect */
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* Header */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardHeader h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Date Badge */
+.date {
+  font-size: 11px;
+  background: #eef2ff;
+  color: #4a6cf7;
+  padding: 4px 8px;
+  border-radius: 20px;
+}
+
+/* Description */
+.desc {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.5;
+  min-height: 40px;
 }
 
 /* Buttons */
 .actions {
-  margin-top: 25px;
+  margin-top: 18px;
   display: flex;
   justify-content: space-between;
 }
 
+/* Open Button */
 .openBtn {
-  background: #4caf50;
-  color: white;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
+  color: white;
+  padding: 7px 14px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
 }
 
+.openBtn:hover {
+  transform: scale(1.05);
+}
+
+/* Delete Button */
 .deleteBtn {
-  background: #ff4d4f;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
+  background: transparent;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 7px 14px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+  margin-right: 100px;
+}
+
+.deleteBtn:hover {
+  background: #ef4444;
+  color: white;
 }

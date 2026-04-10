@@ -1,77 +1,60 @@
-.navbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
-border-bottom: 2px solid #0d213c;
-}
-
-/* LEFT */
-
-.title{
-font-size:28px;
-font-family:'Times New Roman';
-color:black;
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 15px 30px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* RIGHT */
 
-.right{
-display:flex;
-align-items:center;
-gap:25px;
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.bell{
-font-size:20px;
-cursor:pointer;
+/* PROFILE */
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
-.profile{
-display:flex;
-align-items:center;
-gap:8px;
-cursor:pointer;
-margin-left: 1000px;
-margin-bottom: 25px;
+.name {
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
 }
+
+/* AVATAR */
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #4a6cf7, #6a8cff);
+  background: linear-gradient(135deg, #4facfe, #0070f3);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  font-weight: bold;
-  margin-left: 10px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.name{
-color:black;
-margin-right: 20px;
-font-size: 20px;
-}
-
-.arrow{
-font-size:12px;
-}
+/* LOGOUT */
 
 .logoutIcon {
-  font-size: 30px;
-  margin-left: 5px;
+  font-size: 20px;
   cursor: pointer;
-  color: white;
-  background-color: #ff4d4f;
-  transition: 0.2s;
-  margin-bottom: 28px;
-  padding: 5px;
-  border-radius: 5px;
+  color: #ff4d4f;
+  transition: all 0.2s ease;
 }
 
 .logoutIcon:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }

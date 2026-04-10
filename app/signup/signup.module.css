@@ -3,62 +3,94 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(120deg, #bbd2ef, #11376a);
+  background: linear-gradient(135deg, #98ccfa, #6cf1f8);
+  font-family: 'Poppins', sans-serif;
 }
 
 .form {
-  background: whitesmoke;
-  padding: 40px;
-  border-radius: 8px;
-  width: 350px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  padding: 40px 35px;
+  border-radius: 16px;
+  width: 380px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  box-shadow: 0 4px 10px rgb(13, 21, 71);
-  width: 380px;
+  gap: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.form h2{
-  color: black;
-  margin-top: 10px;
-  margin-left: 100px;
-  margin-bottom: 40px;
-  font-size: 30px;
-  font-family: 'Times New Roman', Times, serif;
+.title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .form input {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #62606033;
-  width: 100%;
-  background-color: whitesmoke;
-  height: 40px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: #ffffff;
+  transition: 0.3s;
   color: black;
+}
+
+.form input:focus {
+  box-shadow: 0 0 0 2px #4facfe;
+}
+
+.passwordField {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordField input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.passwordField span {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
 }
 
 .form button {
-  padding: 10px;
-  margin-top: 35px;
-  background-color: #0070f3;
+  padding: 12px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #0070f3, #0051c3);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 20px;
-  font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-.form p{
-  color: black;
-  font-family: 'Times New Roman', Times, serif;
-  margin-left: 50px;
+.form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 112, 243, 0.3);
 }
 
-.form p .link{
+.form p {
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.link {
   color: #0070f3;
+  font-weight: 500;
+  text-decoration: none;
 }
 
-.form p .link:hover{
+.link:hover {
   text-decoration: underline;
 }

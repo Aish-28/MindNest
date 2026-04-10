@@ -2,18 +2,23 @@
 import { useState } from "react";
 import styles from "./signup.module.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Signup() {
+  const router = useRouter();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
       return;
     }
 
@@ -28,22 +33,20 @@ export default function Signup() {
     const data = await res.json();
 
     if (res.ok) {
-      alert("Signup successful");
       router.push("/login");
     } else {
-      alert(data.message || "Signup failed");
+      console.log(data.message || "Signup failed");
     }
   };
-
 
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h2>Signup</h2>
+        <h2 className={styles.title}>Create Account</h2>
 
         <input
           type="text"
-          placeholder="Enter Name"
+          placeholder="Full Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -51,32 +54,47 @@ export default function Signup() {
 
         <input
           type="email"
-          placeholder="Enter Email"
+          placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        {/* Password Field */}
+        <div className={styles.passwordField}>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <span onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
 
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
+        {/* Confirm Password Field */}
+        <div className={styles.passwordField}>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          <span onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
 
-        <button type="submit">Signup</button>
+        <button type="submit">Sign Up</button>
 
         <p>
-          Already have an account? <Link href="/login" className={styles.link}>Login</Link>
+          Already have an account?{" "}
+          <Link href="/login" className={styles.link}>
+            Login
+          </Link>
         </p>
       </form>
     </div>

@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  background: #f4f6f8;
+  background: #f5f7fb;
   height: 100vh;
 }
 
@@ -10,57 +10,44 @@
 }
 
 /* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
 .header h2 {
-  color: black;
-  font-family: 'Times New Roman', Times, serif;
-}
-
-.profile {
-  background: #fff;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 14px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-/* dropdown */
-
-.projectSelector {
+  color: #111;
+  font-size: 26px;
+  font-weight: 600;
   margin-bottom: 20px;
+}
+
+/* Dropdown */
+.projectSelector {
+  margin-bottom: 25px;
 }
 
 .projectSelector label {
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
-  color: black;
+  color: #111;
 }
 
 .dropdown {
-  width: 250px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background: #f9fafb;
-  cursor: pointer;
-  transition: 0.2s;
-  color: black;
+  width: 280px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #111;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
 .dropdown:hover {
-  border-color: #4a6cf7;
+  border-color: #3b82f6;
 }
 
 .dropdown:focus {
   outline: none;
-  border-color: #4a6cf7;
-  box-shadow: 0 0 0 2px rgba(74,108,247,0.2);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
 }
 
 /* Tabs */
@@ -71,131 +58,119 @@
 }
 
 .tabs button {
-  padding: 10px 20px;
+  padding: 10px 18px;
   border: none;
-  background: #0d213c;
-  color: white;
-  border-radius: 6px;
+  background: #e5e7eb;
+  color: #111;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 15px;
-  transition: 0.3s ease;
+  font-weight: 500;
+  transition: 0.2s;
 }
 
 .tabs button:hover {
-  background: #1e3a5f;
+  background: #dbeafe;
 }
 
 .activeTab {
   background-color: #3b82f6 !important;
-  color: white;
+  color: white !important;
 }
 
 /* Upload Box */
 .uploadBox {
   border: 2px dashed #d1d5db;
-  background: #fff;
-  padding: 50px;
+  background: white;
+  padding: 60px;
   text-align: center;
-  border-radius: 10px;
-  transition: 0.3s;
-  position: relative;
+  border-radius: 12px;
+  transition: 0.25s;
 }
 
 .uploadBox:hover {
   border-color: #3b82f6;
+  background: #f9fbff;
 }
 
 .uploadBox p {
-  color: black;
-  margin-top: 10px;
+  color: #111;
 }
 
-/* Hide default file input */
 .uploadBox input[type="file"] {
   display: none;
+}
+
+.fileName {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #374151;
 }
 
 /* Browse Button */
 .browse {
   background-color: #3b82f6;
   color: white;
-  margin-left: 5px;
-  padding: 8px 12px;
+  padding: 8px 14px;
   border-radius: 8px;
+  margin-left: 5px;
+  cursor: pointer;
   transition: 0.2s;
 }
 
 .browse:hover {
-  cursor: pointer;
   background-color: #2563eb;
-  transform: scale(1.05);
 }
 
-/* YouTube Input */
+/* Input */
 .input {
   width: 60%;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   border: 1px solid #d1d5db;
-  margin-right: 10px;
-  outline: none;
-  background-color: #f3f4f6; 
+  background: white;
   color: #111;
+  margin-right: 10px;
 }
 
-/* Focus effect */
 .input:focus {
+  outline: none;
   border-color: #3b82f6;
-  background-color: #e5e7eb; /* slightly darker grey */
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
 }
 
-/* Submit Button */
+/* Button */
 .uploadBox button {
-  padding: 10px 15px;
+  padding: 10px 16px;
   border: none;
   background: #3b82f6;
   color: white;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 
 .uploadBox button:hover {
   background: #2563eb;
 }
 
-/* Status Box */
+/* Status */
 .statusBox {
   margin-top: 25px;
-  background: #fff;
+  background: white;
   padding: 20px;
-  border-radius: 10px;
-  color: #4b5563;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+  border-radius: 12px;
+  color: #374151;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.06);
 }
 
-/* Status Items */
 .statusBox p {
-  margin: 12px 0;
+  margin: 10px 0;
   display: flex;
-  align-items: center;
   gap: 10px;
+  align-items: center;
 }
 
-/* Green check */
-.statusBox p span {
-  color: rgb(22, 186, 22);
+.statusBox span {
+  color: green;
   font-weight: bold;
-}
-
-/* Optional loading animation */
-.statusBox p::after {
-  content: "...";
-  animation: dots 1.5s infinite;
-}
-
-@keyframes dots {
-  0% { content: "."; }
-  33% { content: ".."; }
-  66% { content: "..."; }
 }

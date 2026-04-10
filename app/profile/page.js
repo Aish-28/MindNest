@@ -13,8 +13,6 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const [preview, setPreview] = useState("/default-avatar.png");
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,7 +20,6 @@ export default function Profile() {
     bio: "",
   });
 
-  // 🔐 Auth + Load data
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -38,14 +35,11 @@ export default function Profile() {
       return;
     }
 
-    // 👉 Load saved profile from localStorage
     const savedProfile = localStorage.getItem("profile");
-    console.log("Saved profile:", savedProfile);
 
     if (savedProfile) {
       const parsed = JSON.parse(savedProfile);
       setFormData(parsed);
-      if (parsed.image) setPreview(parsed.image);
     } else {
       setFormData({
         name: decodedUser.name,
@@ -60,42 +54,16 @@ export default function Profile() {
 
   if (loading) return null;
 
-  // 📝 handle input
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 🖼️ image upload (convert to base64)
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setPreview(reader.result);
-
-        // save image in formData
-        setFormData((prev) => ({
-          ...prev,
-          image: reader.result,
-        }));
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // 💾 Save to localStorage
   const handleSave = () => {
-  localStorage.setItem("profile", JSON.stringify(formData));
-
-  // 🔥 force navbar refresh
-  window.dispatchEvent(new Event("profileUpdated"));
-
-  alert("Profile saved locally!");
-  setIsEditing(false);
-};
+    localStorage.setItem("profile", JSON.stringify(formData));
+    window.dispatchEvent(new Event("profileUpdated"));
+    alert("Profile saved!");
+    setIsEditing(false);
+  };
 
   return (
     <div className={styles.container}>
@@ -104,15 +72,12 @@ export default function Profile() {
       <div className={styles.main}>
         <Navbar />
 
-        {/* Header */}
-        <div className={styles.header}>
-          <div>
-            <div className={styles.avatar}>
-              {formData.name ? formData.name.charAt(0).toUpperCase() : "U"}
-            </div>
-            {isEditing && (
-              <input type="file" onChange={handleImageChange} />
-            )}
+        {/* Profile Header */}
+        <div className={styles.profileCard}>
+          <div className={styles.avatar}>
+            {formData.name
+              ? formData.name.charAt(0).toUpperCase()
+              : "U"}
           </div>
 
           <div>
@@ -127,10 +92,12 @@ export default function Profile() {
             <h3>12</h3>
             <p>Documents</p>
           </div>
+
           <div className={styles.card}>
             <h3>45</h3>
             <p>MCQs</p>
           </div>
+
           <div className={styles.card}>
             <h3>10</h3>
             <p>Sessions</p>
@@ -183,7 +150,6 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* Buttons */}
           <div className={styles.actions}>
             {!isEditing ? (
               <button

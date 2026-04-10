@@ -16,7 +16,7 @@ export default function Dashboard() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      router.replace("/login"); // 🔥 block access
+      router.replace("/login");
     } else {
       const decodedUser = getUserFromToken();
       if (!decodedUser) {
@@ -32,25 +32,19 @@ export default function Dashboard() {
 
   return (
     <div className={styles.container}>
-
       <Sidebar />
 
       <div className={styles.main}>
-
         <Navbar />
 
-        <h2 className={styles.dashboard}>
-          Dashboard
-        </h2>
+        <h2 className={styles.dashboard}>Dashboard</h2>
 
         <h2 className={styles.welcome}>
           Welcome back, {user?.name}
         </h2>
 
         {/* Stats Cards */}
-
         <div className={styles.stats}>
-
           <div className={styles.card}>
             <h2>12</h2>
             <p>Documents Uploaded</p>
@@ -70,13 +64,10 @@ export default function Dashboard() {
             <h2>10</h2>
             <p>Study Sessions</p>
           </div>
-
         </div>
 
-        {/* Knowledge Base Table */}
-
+        {/* Table */}
         <div className={styles.tableContainer}>
-
           <h3>My Knowledge Base</h3>
 
           <table>
@@ -90,7 +81,6 @@ export default function Dashboard() {
             </thead>
 
             <tbody>
-
               <tr>
                 <td>DBMS Unit 1</td>
                 <td>PDF</td>
@@ -120,15 +110,10 @@ export default function Dashboard() {
                   <button>Download</button>
                 </td>
               </tr>
-
             </tbody>
-
           </table>
-
         </div>
-
       </div>
-
     </div>
   );
 }

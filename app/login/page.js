@@ -3,12 +3,12 @@ import { useState } from "react";
 import styles from "./login.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
@@ -29,20 +29,16 @@ export default function Login() {
 
       if (!res.ok) {
         const text = await res.text();
-        alert(text);
+        console.log(text); // removed alert
         return;
       }
 
       const data = await res.json();
 
-      // store token
       localStorage.setItem("token", data.token);
-
-      // optionally store user
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      alert("Login successful!");
-      router.push("/dashboard");
+      router.push("/dashboard"); // removed alert
 
     } catch (error) {
       console.error("Login error:", error);
@@ -52,28 +48,37 @@ export default function Login() {
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        <h2 className={styles.title}>Welcome Back</h2>
 
         <input
           type="email"
-          placeholder="Enter Email"
+          placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        {/* Password Field */}
+        <div className={styles.passwordField}>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <span onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
 
         <button type="submit">Login</button>
 
         <p>
-          Don't have an account? <Link href="/signup" className={styles.link}>Signup</Link>
+          Don't have an account?{" "}
+          <Link href="/signup" className={styles.link}>
+            Signup
+          </Link>
         </p>
       </form>
     </div>

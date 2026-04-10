@@ -6,172 +6,177 @@ import { useState, useEffect } from "react";
 
 export default function Upload() {
 
-    const [activeTab, setActiveTab] = useState("pdf");
-    const [file, setFile] = useState(null);
-    const [youtubeLink, setYoutubeLink] = useState("");
-    const [status, setStatus] = useState([]);
-    const [projects, setProjects] = useState([]);
-    const [selectedProject, setSelectedProject] = useState("");
+  const [activeTab, setActiveTab] = useState("pdf");
+  const [file, setFile] = useState(null);
+  const [youtubeLink, setYoutubeLink] = useState("");
+  const [status, setStatus] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState("");
 
-    useEffect(() => {
-  const savedProjects = localStorage.getItem("projects");
-  if (savedProjects) {
-    const parsed = JSON.parse(savedProjects);
-    setProjects(parsed);
+  useEffect(() => {
+    const savedProjects = localStorage.getItem("projects");
 
-    // Auto select first project
-    if (parsed.length > 0) {
-      setSelectedProject(parsed[0].name);
+    if (savedProjects) {
+      const parsed = JSON.parse(savedProjects);
+
+      if (Array.isArray(parsed)) {
+        setProjects(parsed);
+
+        if (parsed.length > 0) {
+          const first =
+            typeof parsed[0] === "string" ? parsed[0] : parsed[0].title;
+
+          setSelectedProject(first);
+        }
+      }
     }
-  }
-}, []);
+  }, []);
 
-    // Handle PDF Upload
-    const handleFileChange = async (e) => {
-        const selectedFile = e.target.files[0];
-        if (!selectedProject) {
-            alert("Please select a project first!");
-            return;
-        }
-        if (!selectedFile) return;
+  // Handle PDF Upload
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
 
-        setFile(selectedFile);
-        setStatus([]);
+    if (!selectedProject) {
+      alert("Please select a project first!");
+      return;
+    }
 
-        // Simulate processing steps
-        setStatus((prev) => [...prev, "Extracting text..."]);
+    if (!selectedFile) return;
 
-        setTimeout(() => {
-        setStatus((prev) => [...prev, "Chunking document..."]);
-        }, 1000);
+    setFile(selectedFile);
+    setStatus([]);
 
-        setTimeout(() => {
-        setStatus((prev) => [...prev, "Indexing into knowledge base..."]);
-        }, 2000);
-    };
+    setStatus(["Extracting text..."]);
 
-    // Handle YouTube Submit
-    const handleYoutubeSubmit = async () => {
-        if (!selectedProject) {
-            alert("Please select a project first!");
-            return;
-        }
-        if (!youtubeLink) return;
+    setTimeout(() => {
+      setStatus((prev) => [...prev, "Chunking document..."]);
+    }, 1000);
 
-        setStatus([]);
+    setTimeout(() => {
+      setStatus((prev) => [...prev, "Indexing into knowledge base..."]);
+    }, 2000);
+  };
 
-        setStatus((prev) => [...prev, "Fetching video data..."]);
+  // Handle YouTube Submit
+  const handleYoutubeSubmit = () => {
+    if (!selectedProject) {
+      alert("Please select a project first!");
+      return;
+    }
 
-        setTimeout(() => {
-        setStatus((prev) => [...prev, "Extracting transcript..."]);
-        }, 1000);
+    if (!youtubeLink) return;
 
-        setTimeout(() => {
-        setStatus((prev) => [...prev, "Indexing content..."]);
-        }, 2000);
-    };
+    setStatus(["Fetching video data..."]);
 
-    return(
-        <div className={styles.container}>
-            <Sidebar />
+    setTimeout(() => {
+      setStatus((prev) => [...prev, "Extracting transcript..."]);
+    }, 1000);
 
-            <div className={styles.main}>
-                <Navbar />
+    setTimeout(() => {
+      setStatus((prev) => [...prev, "Indexing content..."]);
+    }, 2000);
+  };
 
-                <div className={styles.header}>
-                    <h2>Upload Content</h2>
-                </div>
+  return (
+    <div className={styles.container}>
+      <Sidebar />
 
-                {/* Dropdown */}
+      <div className={styles.main}>
+        <Navbar />
 
-                <div className={styles.projectSelector}>
-                <label>Select Project</label>
-
-                <select
-                    value={selectedProject}
-                    onChange={(e) => setSelectedProject(e.target.value)}
-                    className={styles.dropdown}
-                >
-                    {projects.length === 0 ? (
-                    <option>No projects found</option>
-                    ) : (
-                    projects.map((proj, index) => (
-                        <option key={index} value={proj.name}>
-                        {proj.name}
-                        </option>
-                    ))
-                    )}
-                </select>
-                </div>
-
-                {/* Tabs */}
-
-                <div className={styles.tabs}>
-
-                    <button
-                    className={activeTab === "pdf" ? styles.activeTab : ""}
-                    onClick={() => setActiveTab("pdf")}
-                    >
-                    Upload PDF
-                    </button>
-
-                    <button
-                    className={activeTab === "youtube" ? styles.activeTab : ""}
-                    onClick={() => setActiveTab("youtube")}
-                    >
-                    Add YouTube Link
-                    </button>
-
-                </div>
-
-                {/* PDF Upload */}
-                {activeTab === "pdf" && (
-                <div className={styles.uploadBox}>
-                <input
-                    type="file"
-                    id="fileUpload"
-                    accept="application/pdf"
-                    onChange={handleFileChange}
-                />
-
-                <p>
-                    Drag & drop your file here or{" "}
-                    <label htmlFor="fileUpload" className={styles.browse}>
-                    Browse
-                    </label>
-                </p>
-
-                {file && <p>Selected: {file.name}</p>}
-                </div>
-                )}
-
-                {/* YouTube Input */}
-                {activeTab === "youtube" && (
-                <div className={styles.uploadBox}>
-                    <input
-                    type="text"
-                    placeholder="Enter YouTube link"
-                    value={youtubeLink}
-                    onChange={(e) => setYoutubeLink(e.target.value)}
-                    className={styles.input}
-                    />
-                    <button onClick={handleYoutubeSubmit}>Submit</button>
-                </div>
-                )}
-
-                {/* Status */}
-                {status.length > 0 && (
-                <div className={styles.statusBox}>
-                    {status.map((step, index) => (
-                    <p key={index}>
-                        <span>✔</span> {step}
-                    </p>
-                    ))}
-                </div>
-                )}
-
-            </div>
-        
+        <div className={styles.header}>
+          <h2>Upload Content</h2>
         </div>
-    );
+
+        {/* Project Dropdown */}
+        <div className={styles.projectSelector}>
+          <label>Select Project</label>
+
+          <select
+            value={selectedProject}
+            onChange={(e) => setSelectedProject(e.target.value)}
+            className={styles.dropdown}
+          >
+            {projects.length === 0 ? (
+              <option value="">No projects found</option>
+            ) : (
+              projects.map((proj, index) => {
+                const projectName =
+                  typeof proj === "string" ? proj : proj.title;
+
+                return (
+                  <option key={index} value={projectName}>
+                    {projectName}
+                  </option>
+                );
+              })
+            )}
+          </select>
+        </div>
+
+        {/* Tabs */}
+        <div className={styles.tabs}>
+          <button
+            className={activeTab === "pdf" ? styles.activeTab : ""}
+            onClick={() => setActiveTab("pdf")}
+          >
+            Upload PDF
+          </button>
+
+          <button
+            className={activeTab === "youtube" ? styles.activeTab : ""}
+            onClick={() => setActiveTab("youtube")}
+          >
+            Add YouTube Link
+          </button>
+        </div>
+
+        {/* PDF Upload */}
+        {activeTab === "pdf" && (
+          <div className={styles.uploadBox}>
+            <input
+              type="file"
+              id="fileUpload"
+              accept="application/pdf"
+              onChange={handleFileChange}
+            />
+
+            <p>
+              Drag & drop your file here or{" "}
+              <label htmlFor="fileUpload" className={styles.browse}>
+                Browse
+              </label>
+            </p>
+
+            {file && <p className={styles.fileName}>Selected: {file.name}</p>}
+          </div>
+        )}
+
+        {/* YouTube */}
+        {activeTab === "youtube" && (
+          <div className={styles.uploadBox}>
+            <input
+              type="text"
+              placeholder="Enter YouTube link"
+              value={youtubeLink}
+              onChange={(e) => setYoutubeLink(e.target.value)}
+              className={styles.input}
+            />
+            <button onClick={handleYoutubeSubmit}>Submit</button>
+          </div>
+        )}
+
+        {/* Status */}
+        {status.length > 0 && (
+          <div className={styles.statusBox}>
+            {status.map((step, index) => (
+              <p key={index}>
+                <span>✔</span> {step}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
