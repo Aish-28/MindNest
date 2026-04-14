@@ -48,7 +48,8 @@ model Project {
   questionBanks  QuestionBank[]
   notes          Note[]
   topicAnalysis  TopicAnalysis?
-   projectContents ProjectContent[]
+  projectContents ProjectContent[]
+  embeddings Embedding[]
 }
 
 model Content {
@@ -66,6 +67,7 @@ model Content {
   youtubeUrl  String?   // for youtube links
   transcript  String?   // extracted transcript/text
   projects ProjectContent[]
+  embeddings Embedding[]
 }
 
 model QuestionBank {
@@ -120,4 +122,17 @@ model ProjectContent {
   content Content @relation(fields: [contentId], references: [id])
 
   @@id([projectId, contentId])
+}
+
+model Embedding {
+  id        String   @id @default(uuid())
+  content   String   @db.Text   // chunk text
+  vector    Unsupported("vector") // pgvector
+  createdAt DateTime @default(now())
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+
+  contentId String?
+  contentRef Content? @relation(fields: [contentId], references: [id])
 }
