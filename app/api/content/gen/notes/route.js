@@ -10,7 +10,7 @@ export async function POST(request) {
       return NextResponse.json({ error: "projectId is required" }, { status: 400 });
     }
 
-    // broader seed queries to pull diverse content for notes
+    
     const seedQueries = [
       "key concepts and definitions",
       "important theories and principles",
