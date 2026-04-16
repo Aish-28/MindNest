@@ -14,7 +14,7 @@ export async function searchSimilarChunks(queryText, projectId, topK = 5) {
     ORDER BY similarity DESC
     LIMIT ${topK}
   `;
-    const confident = results.filter(r => Number(r.similarity) > 0.45);
+    const confident = results.filter(r => Number(r.similarity) > 0.2);
     return confident.map(r => r.content);
 
 }

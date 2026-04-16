@@ -25,7 +25,8 @@ export async function POST(request) {
         CONTEXT:
         ${chunks.join("\n\n---\n\n")}
         QUESTION:${question} Give a clear, concise answer.`
-        const answer = askGemini(prompt);
+        const answer = await askGemini(prompt);
+        console.log("Generated answer:", answer);
         return NextResponse.json({answer});
     }
     catch (error) {
