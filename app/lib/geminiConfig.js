@@ -24,7 +24,7 @@ export async function askGemini(prompt) {
   });
 
   const data = await response.json();
-
+  console.log(data)
   if (!response.ok) throw new Error(`Groq error: ${JSON.stringify(data)}`);
 
   return data.choices[0].message.content;
