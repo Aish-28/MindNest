@@ -16,10 +16,31 @@ export default function Projects() {
 
   // Load projects
   useEffect(() => {
-    const saved = localStorage.getItem("projects");
-    if (saved) {
-      setProjects(JSON.parse(saved));
-    }
+    const fetchProjects=async () =>{
+      try{
+        const token=localStorage.getItem("token");
+
+        const res=await fetch("/api/project/fetch",{
+          method:"GET",
+          headers:{
+            Authorization:`Bearer ${token}`,
+          },
+        });
+
+        const data=await res.json();
+
+        if (res.ok){
+          setProjects(data.projects);
+        }else{
+          console.error(data.message);
+        }
+      }
+      catch(err){
+        console.log("Error in fetching projects: ",err);
+      }
+    };
+
+    fetchProjects();
   }, []);
 
   // Handle input change
@@ -31,43 +52,51 @@ export default function Projects() {
   };
 
   // Create project
-  const handleCreateProject = () => {
+  const handleCreateProject =async () => {
     if (!form.title.trim()) return;
 
-    const newProj = {
-      id: Date.now().toString(),
-      title: form.title,
-      description: form.description,
-      createdAt: new Date().toLocaleDateString(),
+    try{
+      const token=localStorage.getItem("token");
 
-      // Add dummy details here so details page works
-      topicAnalysis: {
-        topics: ["Sample Topic 1", "Sample Topic 2"],
-      },
-      questionBanks: [
-        { question: "Sample Question 1?" },
-        { question: "Sample Question 2?" },
-      ],
-      notes: [
-        { content: "Sample note 1" },
-        { content: "Sample note 2" },
-      ],
-    };
+      const res=await fetch("/api/project/create",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${token}`,
+        },
+        body:JSON.stringify({
+          title:form.title,
+          description:form.description,
+        }),
+      });
 
-    const updated = [newProj, ...projects];
+      const data=await res.json();
 
-    setProjects(updated);
-    localStorage.setItem("projects", JSON.stringify(updated));
+      if(res.ok){
+        setProjects((prev)=>[data.newProject, ...prev]);
 
-    setForm({ title: "", description: "" });
+        setForm({title:"", description:""});
+        console.log("Response:", data);
+      }
+      else{
+        console.log(data.message);
+      }
+    }
+    catch(err){
+      console.log("Error in creating project: ",err);
+    }
   };
 
   // Delete project
+  // const handleDelete = (id) => {
+  //   const updated = projects.filter((proj) => proj.id !== id);
+  //   setProjects(updated);
+  //   localStorage.setItem("projects", JSON.stringify(updated));
+  // };
+
   const handleDelete = (id) => {
-    const updated = projects.filter((proj) => proj.id !== id);
-    setProjects(updated);
-    localStorage.setItem("projects", JSON.stringify(updated));
-  };
+  setProjects((prev) => prev.filter((proj) => proj.id !== id));
+};
 
   return (
     <div className={styles.container}>
@@ -114,7 +143,7 @@ export default function Projects() {
                 
                 <div className={styles.cardHeader}>
                   <h3>📌 {proj.title}</h3>
-                  <span className={styles.date}>{proj.createdAt}</span>
+                  <span className={styles.date}>{new Date(proj.createdAt).toLocaleString()}</span>
                 </div>
 
                 <p className={styles.desc}>

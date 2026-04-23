@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
+
 export default function Signup() {
   const router = useRouter();
 
@@ -18,6 +19,18 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(!email.includes("@")){
+      alert("Email must contain '@");
+      return;
+    }
+
+    const passPattern=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+
+    if(!passPattern.test(password)){
+      alert("Password must be 8-20 characters and include uppercase, lowercase, number, and special character");
+      return;
+    }
+
     if (password !== confirmPassword) {
       return;
     }
@@ -30,12 +43,18 @@ export default function Signup() {
       body: JSON.stringify({ name, email, password }),
     });
 
-    const data = await res.json();
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      data = null;
+    }
 
     if (res.ok) {
       router.push("/login");
     } else {
       console.log(data.message || "Signup failed");
+      alert("Signup failed")
     }
   };
 
