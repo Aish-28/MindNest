@@ -1,6 +1,6 @@
 .sidebar {
   width: 300px;
-  height: 100vh;
+  height: auto;
   background: #0f172a; /* modern dark navy */
   color: #e5e7eb;
   padding: 20px 15px;

@@ -41,7 +41,7 @@ export default function Navbar() {
     localStorage.removeItem("user");
     localStorage.removeItem("profile");
 
-    router.replace("/login"); // removed alert
+    router.replace("/homepage"); // removed alert
   };
 
   const displayName = profile?.name || user?.name || "Guest";
