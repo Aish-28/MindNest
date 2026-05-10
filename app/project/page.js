@@ -155,7 +155,7 @@ export default function Projects() {
                     className={styles.openBtn}
                     onClick={() => {
                       localStorage.setItem("selectedProject", JSON.stringify(proj));
-                      router.push("/projectDet");
+                      router.push(`/project/${proj.id}`);
                     }}
                   >
                     Open
