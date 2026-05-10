@@ -42,11 +42,33 @@ export async function POST(request) {
 
             return NextResponse.json({ success: true, content });
         }
+        if (type === "YOUTUBE") {
+            const youtubeUrl = formData.get("youtubeUrl");
+
+            if (!youtubeUrl) {
+                return NextResponse.json({ error: "YouTube URL is required" }, { status: 400 });
+            }
+
+            const content = await prisma.content.create({
+                data: {
+                    title: title || youtubeUrl,
+                    type: "YOUTUBE",
+                    youtubeUrl,
+                    projectId,
+                    status: "processing",
+                },
+            });
+
+            // async processing — no buffer needed for YouTube
+            processContent(content.id, null);
+
+            return NextResponse.json({ success: true, content });
+        }
 
     }
     catch (error) {
         console.error("Upload failed:", error);
         return NextResponse.json({ error: error.message }, { status: 500 });
-        
+
     }
 }

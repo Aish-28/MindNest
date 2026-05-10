@@ -1,7 +1,7 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 import { createRequire } from "module";
 import { chunkText } from "./chunk";
-
+import { YoutubeTranscript } from "youtube-transcript";
 import { generateEmbedding } from "./embeding";
 
 const require = createRequire(import.meta.url);
@@ -44,12 +44,32 @@ export async function processContent(contentId, buffer) {
                 ${content.id}
                 )
                 `;
-                
+
             }
         }
 
-        if (content.type === "YOUTUBE") {
-            extractedText = "YouTube transcript logic coming soon...";
+        if (content.type === "YOUTUBE" && content.youtubeUrl) {
+            const transcriptItems = await YoutubeTranscript.fetchTranscript(content.youtubeUrl);
+            extractedText = transcriptItems.map((item) => item.text).join(" ");
+
+            const chunks = chunkText(extractedText);
+            console.log("chunks:", chunks.length);
+
+            for (const chunk of chunks) {
+                const vector = await generateEmbedding(chunk);
+                const vectorString = `[${vector.join(",")}]`;
+
+                await prisma.$executeRaw`
+            INSERT INTO "Embedding" (id, content, vector, "projectId", "contentId")
+            VALUES (
+            ${crypto.randomUUID()},
+            ${chunk},
+            ${Prisma.raw(`'${vectorString}'::vector`)},
+            ${content.projectId},
+            ${content.id}
+            )
+        `;
+            }
         }
 
         await prisma.content.update({

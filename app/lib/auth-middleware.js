@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export function requireAuth(req) {
   const token = req.headers.get("authorization")?.split(" ")[1];
-  console.log("Auth token:", token);
+  //console.log("Auth token:", token);
 
   if (!token) {
     return {
@@ -16,7 +16,7 @@ export function requireAuth(req) {
 
   try {
     const decoded = verifyJwt(token);
-    console.log("Decoded:", decoded);
+    //console.log("Decoded:", decoded);
     return { user: decoded };
   } catch {
     return {
