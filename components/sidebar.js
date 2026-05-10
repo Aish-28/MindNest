@@ -20,9 +20,9 @@ export default function Sidebar() {
         <li>
           <Link href="/upload">Upload Content</Link>
         </li>
-        <li>
+        {/* <li>
           <Link href="/profile">Profile</Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
