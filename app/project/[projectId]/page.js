@@ -94,7 +94,7 @@ export default function ProjectDetail() {
 
                     <button
                         className={styles.askBtn}
-                        onClick={() => router.push("/questions")}
+                        onClick={() => router.push(`/questions/${projectId}`)}
                     >
                         Ask Questions
                     </button>
