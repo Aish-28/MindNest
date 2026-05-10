@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { searchSimilarChunks } from "../../../../lib/search";
 import { askGemini } from "../../../../lib/geminiConfig";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function POST(request) {
   try {
@@ -10,7 +13,6 @@ export async function POST(request) {
       return NextResponse.json({ error: "projectId is required" }, { status: 400 });
     }
 
-    
     const seedQueries = [
       "key concepts and definitions",
       "important theories and principles",
@@ -23,7 +25,6 @@ export async function POST(request) {
       seedQueries.map(q => searchSimilarChunks(q, projectId, 5))
     );
 
-    // flatten and deduplicate
     const allChunks = [...new Set(chunkSets.flat())];
 
     if (allChunks.length === 0) {
@@ -58,7 +59,29 @@ Generate study notes in the following JSON format ONLY, no markdown, no explanat
     const clean = raw.replace(/```json|```/g, "").trim();
     const notes = JSON.parse(clean);
 
-    return NextResponse.json({ notes, totalChunks: allChunks.length });
+    // Build plain text content to store in DB
+    const content = [
+      notes.title,
+      "",
+      ...notes.sections.flatMap(s => [
+        s.heading,
+        ...s.points.map(p => `• ${p}`),
+        "",
+      ]),
+      "Summary",
+      notes.summary,
+    ].join("\n");
+
+    // Save to DB
+    const saved = await prisma.note.create({
+      data: {
+        title: notes.title,
+        content,
+        projectId,
+      },
+    });
+
+    return NextResponse.json({ notes, noteId: saved.id, totalChunks: allChunks.length });
 
   } catch (err) {
     console.error("Notes generation error:", err);
