@@ -26,13 +26,13 @@ enum QuestionType {
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String   @id @default(uuid())
   name      String
-  email     String    @unique
+  email     String   @unique
   password  String
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
-  projects  Project[]
+  projects Project[]
 }
 
 model Project {
@@ -42,14 +42,14 @@ model Project {
   createdAt   DateTime @default(now())
 
   userId String
-  user   User @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 
-  contents       Content[]
-  questionBanks  QuestionBank[]
-  notes          Note[]
-  topicAnalysis  TopicAnalysis?
+  contents        Content[]
+  questionBanks   QuestionBank[]
+  notes           Note[]
+  topicAnalysis   TopicAnalysis?
   projectContents ProjectContent[]
-  embeddings Embedding[]
+  embeddings      Embedding[]
 }
 
 model Content {
@@ -58,15 +58,17 @@ model Content {
   type      ContentType
   createdAt DateTime    @default(now())
 
-  status    String      @default("processing")
+  status String @default("processing")
 
-  projectId String
-  project   Project     @relation(fields: [projectId], references: [id])
+  projectId     String
+  progress      Int     @default(0) // ✅ add this
+  statusMessage String?
+  project       Project @relation(fields: [projectId], references: [id])
 
-  fileUrl     String?   // for PDFs
-  youtubeUrl  String?   // for youtube links
-  transcript  String?   // extracted transcript/text
-  projects ProjectContent[]
+  fileUrl    String? // for PDFs
+  youtubeUrl String? // for youtube links
+  transcript String? // extracted transcript/text
+  projects   ProjectContent[]
   embeddings Embedding[]
 }
 
@@ -76,7 +78,7 @@ model QuestionBank {
   createdAt DateTime @default(now())
 
   projectId String
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
 
   questions Question[]
 }
@@ -85,7 +87,7 @@ model Question {
   id        String       @id @default(uuid())
   type      QuestionType
   text      String
-  options   Json?        // only for MCQs
+  options   Json? // only for MCQs
   answer    String
   createdAt DateTime     @default(now())
 
@@ -100,15 +102,15 @@ model Note {
   createdAt DateTime @default(now())
 
   projectId String
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
 }
 
 model TopicAnalysis {
-  id               String   @id @default(uuid())
-  importantTopics  Json
-  scoringAreas     Json
-  difficultTopics  Json
-  createdAt        DateTime @default(now())
+  id              String   @id @default(uuid())
+  importantTopics Json
+  scoringAreas    Json
+  difficultTopics Json
+  createdAt       DateTime @default(now())
 
   projectId String  @unique
   project   Project @relation(fields: [projectId], references: [id])
@@ -125,14 +127,14 @@ model ProjectContent {
 }
 
 model Embedding {
-  id        String   @id @default(uuid())
-  content   String   @db.Text   // chunk text
+  id        String                @id @default(uuid())
+  content   String                @db.Text // chunk text
   vector    Unsupported("vector") // pgvector
-  createdAt DateTime @default(now())
+  createdAt DateTime              @default(now())
 
   projectId String
   project   Project @relation(fields: [projectId], references: [id])
 
-  contentId String?
+  contentId  String?
   contentRef Content? @relation(fields: [contentId], references: [id])
 }

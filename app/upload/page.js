@@ -43,6 +43,15 @@ export default function Upload() {
 
     if (!selectedFile) return;
 
+    const max_size=2*1024*1024;
+
+    if (selectedFile.size>max_size){
+      alert("File size should be less than 2MB");
+      e.target.value=null;
+      setFile(null);
+      return;
+    }
+
     setFile(selectedFile);
     setStatus([]);
 
