@@ -1,4 +1,4 @@
-import { PrismaClient,Prisma } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { createRequire } from "module";
 import { chunkText } from "./chunk";
 
@@ -43,7 +43,8 @@ export async function processContent(contentId, buffer) {
                 ${content.projectId},
                 ${content.id}
                 )
-            `;
+                `;
+                
             }
         }
 
