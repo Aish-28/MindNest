@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./projectDet.module.css";
-
-// ✅ Import Sidebar & Navbar (same as Projects page)
 import Sidebar from "../../components/sidebar";
 import Navbar from "../../components/navbar";
 
 const ProjectDetails = () => {
   const [project, setProject] = useState(null);
+  
+  const router = useRouter();
 
   useEffect(() => {
     const saved = localStorage.getItem("selectedProject");
@@ -77,6 +78,15 @@ const ProjectDetails = () => {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className={styles.askBtnContainer}>
+          <button
+            className={styles.askBtn}
+            onClick={() => router.push("/questions")}
+          >
+            Ask Questions
+          </button>
         </div>
       </div>
     </div>
